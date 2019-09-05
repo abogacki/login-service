@@ -19,9 +19,3 @@ services:
     depends_on:
       - database
     command: npm run watch
-  database:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    volumes:
-      - ./db:/data/db

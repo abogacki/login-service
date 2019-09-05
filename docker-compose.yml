@@ -8,14 +8,14 @@ services:
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
       - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=db
+      - MONGO_HOSTNAME=database
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
     ports:
       - 5000:5000
     volumes:
       - ./server/:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./server/node_modules:/usr/src/app/node_modules
     depends_on:
       - database
     links:
