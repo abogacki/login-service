@@ -1,8 +1,16 @@
-FROM node:10
+FROM node:8
 
-WORKDIR /usr/src
-COPY package*.json ./
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Install dependencies
+COPY package.json .
 RUN npm install
+
+# Bundle app source
 COPY . .
-EXPOSE 5000
-CMD ["npm", "run", "watch"]
+
+# Exports
+EXPOSE 3000
+CMD [ "npm", "run", "start.dev" ]
