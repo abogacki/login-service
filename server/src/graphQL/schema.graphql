@@ -1,0 +1,18 @@
+type Query {
+  hello: String
+  gadget(id: Int): Gadget
+  allGadgets: [Gadget]
+}
+
+type Gadget {
+  id: String!
+  name: String!
+  release_date: String!
+  by_company: String
+  price: String
+}
+
+type User {
+  id: ID!
+  gadgets: [Gadget]!
+}
