@@ -18,6 +18,8 @@ services:
       - /usr/src/app/node_modules
     depends_on:
       - database
+    links:
+      - database
     command: npm run watch
   database:
     image: mongo:latest
