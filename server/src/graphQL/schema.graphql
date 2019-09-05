@@ -1,7 +1,7 @@
 type Query {
   hello: String
-  gadget(id: Int): Gadget
-  allGadgets: [Gadget]
+  gadgets: [Gadget]
+  gadget(filter: String): Gadget
 }
 
 type Gadget {
@@ -14,5 +14,24 @@ type Gadget {
 
 type User {
   id: ID!
+  name: String
+  email: String
+  hash: String
   gadgets: [Gadget]!
+}
+
+type AuthData {
+  user: User
+  token: String
+}
+
+type Mutation {
+  # user creation
+  signUp(name: String, password: String, email: String): AuthData
+  # user logging in
+  login(email: String, password: String): AuthData
+}
+
+type Subscription {
+  newUser: User
 }
