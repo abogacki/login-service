@@ -2,7 +2,6 @@
 const { User } = require('../../models/User');
 const bcrpyt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { APP_SECRET } = require('../../utils/utils');
 
 const signUp = async (root, args, context, info) => {
   const { password, name, email } = args;
@@ -15,9 +14,7 @@ const signUp = async (root, args, context, info) => {
   });
   await newUser.save();
 
-  console.log(APP_SECRET, 'APP_SECRET');
-
-  const token = jwt.sign({ sub: newUser._id }, APP_SECRET);
+  const token = jwt.sign({ sub: newUser._id }, process.env.API_KEY);
 
   return {
     token,
@@ -33,7 +30,7 @@ const login = async (root, args, context, info) => {
   if (!bcrpyt.compareSync(password, user.password))
     throw new Error('Incorrect credentials');
 
-  const token = jwt.sign({ sub: password }, APP_SECRET);
+  const token = jwt.sign({ sub: password }, process.env.API_KEY);
 
   return {
     user,

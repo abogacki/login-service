@@ -8,9 +8,7 @@ const graphqlHTTP = require('koa-graphql');
 const { connect } = require('./db');
 const { schema } = require('./graphQL/schema');
 
-const SECRET_KEY = 'my-uber-secret-key';
-
-app.keys = [SECRET_KEY];
+app.keys = [process.env.API_KEY];
 app.use(session(app));
 app.use(bodyParser());
 app.use(passport.initialize());

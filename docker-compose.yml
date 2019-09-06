@@ -11,6 +11,7 @@ services:
       - MONGO_HOSTNAME=database
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
+      - API_KEY=$API_KEY
     ports:
       - 5000:5000
     volumes:
