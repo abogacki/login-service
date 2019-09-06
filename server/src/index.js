@@ -11,8 +11,10 @@ const { schema } = require('./graphQL/schema');
 app.keys = [process.env.API_KEY];
 app.use(session(app));
 app.use(bodyParser());
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(mount('/graphql', graphqlHTTP({ schema, graphiql: true })));
 
 const PORT = process.env.PORT || 5000;
