@@ -1,28 +1,25 @@
 const passport = require('koa-passport');
-const { User } = require('./models/User');
 const LocalStrategy = require('passport-local').Strategy;
+const { User } = require('./models/User');
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id);
-    if (!user) throw new Error('User not found');
-    done(user);
-  } catch (error) {
-    done(null, false);
-  }
+passport.deserializeUser((user, done) => {
+  const user = User.findById(user._id);
+  done(null, user);
 });
-
-const options = {};
 
 passport.use(
-  new LocalStrategy(options, async (email, password, done) => {
-    const user = await User.where('email')
-      .equals(email)
-      .exec();
+  new LocalStrategy(async (email, password, done) => {
+    const user = await User.findOne({ email });
+
+    if (!user) return done(null, false);
+
+    if (!isValid) return done(null, false);
+
+    if (!user.validatePassword(password)) return done(null, false);
 
     return done(null, user);
   })
