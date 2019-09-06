@@ -8,8 +8,11 @@ const ProfileSchema = new Schema({
 
 const UserSchema = new Schema({
   name: String,
-  email: String,
-  password: String,
+  email: {
+    type: String,
+    unique: true,
+  },
+  hash: String,
   gadgets: [GadgetSchema],
   profiles: [ProfileSchema],
 });

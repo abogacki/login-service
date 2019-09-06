@@ -1,11 +1,13 @@
 type Query {
   hello: String
-  gadgets: [Gadget]
-  gadget(filter: String): Gadget
+  gadgets(_id: String, email: String, name: String): [Gadget]
+  gadget(_id: String, email: String, name: String): Gadget
+  users(_id: String, email: String, name: String): [User]
+  user(_id: String, email: String, name: String): User
 }
 
 type Gadget {
-  id: String!
+  _id: ID!
   name: String!
   release_date: String!
   by_company: String
@@ -13,7 +15,7 @@ type Gadget {
 }
 
 type User {
-  id: ID!
+  _id: ID!
   name: String
   email: String
   hash: String
@@ -34,4 +36,5 @@ type Mutation {
 
 type Subscription {
   newUser: User
+  newGadget: Gadget
 }
