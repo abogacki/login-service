@@ -32,6 +32,7 @@ type Mutation {
   signUp(name: String, password: String, email: String): AuthData
   # user logging in
   login(email: String, password: String): AuthData
+  addGadget: String
 }
 
 type Subscription {

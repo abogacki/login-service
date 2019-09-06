@@ -21,8 +21,6 @@ const user = async (parent, args) => {
 
 const users = async (parent, args) => {
   const result = await User.find(args);
-  console.log(result);
-
   return result;
 };
 

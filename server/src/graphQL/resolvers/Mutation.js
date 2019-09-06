@@ -10,11 +10,9 @@ const signUp = async (root, args, context, info) => {
     const newUser = new User({
       name,
       email,
-      hash,
+      password: hash,
     });
     await newUser.save();
-
-    console.log(process.env.API_KEY);
 
     const token = jwt.sign({ sub: newUser._id }, process.env.API_KEY);
 
@@ -29,14 +27,11 @@ const signUp = async (root, args, context, info) => {
 
 const login = async (root, args, context, info) => {
   const { email, password } = args;
-  console.log(email, password);
 
   const user = await User.findOne({ email });
-  console.log(user);
   if (!user) throw new Error('Incorrect credentials');
 
-  const isValid = await bcrpyt.compare(password, user.hash);
-  console.log('isValid', isValid);
+  const isValid = await bcrpyt.compare(password, user.password);
   if (!isValid) throw new Error('Incorrect credentials');
 
   const token = jwt.sign({ sub: password }, process.env.API_KEY);
@@ -47,7 +42,13 @@ const login = async (root, args, context, info) => {
   };
 };
 
+const addGadget = async (root, args, context, info) => {
+  // console.log(await ctx.login());
+  return 'New Gadget';
+};
+
 module.exports = {
   signUp,
   login,
+  addGadget,
 };
