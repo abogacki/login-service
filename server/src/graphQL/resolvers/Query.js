@@ -4,14 +4,11 @@ const { User } = require('../../models/User');
 const hello = () => 'world';
 
 const gadget = (parent, args) => {
-  const fields = Gadget.schema.eachPath(path => console.log(path));
+  return Gadget.find(args);
+};
 
-  const queryParams = fields.reduce(
-    (all, currentField) => ({ ...all, currentField: args[currentField] }),
-    {}
-  );
-
-  return Gadget.find(queryParams);
+const gadgets = (parent, args) => {
+  return Gadget.find();
 };
 
 const user = async (parent, args) => {
@@ -27,12 +24,7 @@ const users = async (parent, args) => {
 module.exports = {
   hello,
   gadget,
+  gadgets,
   users,
   user,
-};
-
-const mapArgsToModelsParams = (args, model) => {
-  let params;
-  model.schema.eachPath(path => (params[path] = args[path]));
-  return;
 };

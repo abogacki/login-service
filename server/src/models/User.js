@@ -14,8 +14,6 @@ const UserSchema = new Schema({
     unique: true,
   },
   password: String,
-  gadgets: [GadgetSchema],
-  profiles: [ProfileSchema],
 });
 
 UserSchema.methods.validatePassword = function(candidatePassowrd) {

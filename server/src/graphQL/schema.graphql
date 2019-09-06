@@ -1,3 +1,6 @@
+scalar Date
+scalar Number
+
 type Query {
   hello: String
   gadgets(_id: String, email: String, name: String): [Gadget]
@@ -18,8 +21,13 @@ type User {
   _id: ID!
   name: String
   email: String
-  hash: String
-  gadgets: [Gadget]!
+  password: String
+}
+
+type UserGadget {
+  _id: ID!
+  user: User
+  gadget: Gadget
 }
 
 type AuthData {
@@ -28,11 +36,14 @@ type AuthData {
 }
 
 type Mutation {
-  # user creation
-  signUp(name: String, password: String, email: String): AuthData
-  # user logging in
-  login(email: String, password: String): AuthData
-  addGadget: String
+  signUp(name: String!, password: String!, email: String!): AuthData
+  login(email: String!, password: String!): AuthData
+  gadgetCreate(
+    name: String!
+    release_date: Date!
+    by_company: String!
+    price: Number!
+  ): Gadget
 }
 
 type Subscription {
