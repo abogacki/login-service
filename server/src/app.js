@@ -3,10 +3,11 @@ const app = new Koa();
 const bodyParser = require('koa-bodyparser');
 const session = require('koa-session');
 const passport = require('koa-passport');
-const mount = require('koa-mount');
 const graphqlHTTP = require('koa-graphql');
 const { connect } = require('./db');
 const { schema } = require('./graphQL/schema');
+
+require('./auth');
 
 app.keys = [process.env.API_KEY];
 app.use(session(app));
@@ -19,12 +20,14 @@ app.use(passport.session());
 const Router = require('koa-router');
 const router = new Router();
 const jwt = require('./middlewares/jwt');
+const routes = require('./routes');
+
 router.all('/graphql', jwt, graphqlHTTP({ schema, graphiql: true }));
+router.post('/signup', routes.signUpPost);
+router.get('/signup', routes.signUpGet);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
-
-// app.use(mount('/graphql', graphqlHTTP({ schema, graphiql: true })));
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, async () => {

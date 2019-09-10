@@ -4,45 +4,26 @@ const { getUserId } = require('../../utils/utils');
 const { User } = require('../../models/User');
 const { Gadget } = require('../../models/Gadget');
 const { UserGadget } = require('../../models/UserGadget');
+const AuthService = require('../../services/AuthService');
 
 const signUp = async (root, args, context, info) => {
   try {
-    const { password, name, email } = args;
-
-    const hash = await bcrpyt.hash(password, 10);
-    const newUser = new User({
-      name,
-      email,
-      password: hash,
-    });
-    await newUser.save();
-
-    const token = jwt.sign({ id: newUser._id }, process.env.API_KEY);
-
-    return {
-      token,
-      user: newUser,
-    };
+    const { name, email, password } = args;
+    const credentials = AuthService.signUp({ name, email, password });
+    return credentials;
   } catch (error) {
     throw error;
   }
 };
 
 const login = async (root, args, context, info) => {
-  const { email, password } = args;
-
-  const user = await User.findOne({ email });
-  if (!user) throw new Error('Incorrect credentials');
-
-  const isValid = await bcrpyt.compare(password, user.password);
-  if (!isValid) throw new Error('Incorrect credentials');
-
-  const token = jwt.sign({ id: user._id }, process.env.API_KEY);
-
-  return {
-    user,
-    token,
-  };
+  try {
+    const { email, password } = args;
+    const credentials = await AuthService.login({ email, password });
+    return credentials;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const gadgetCreate = async (root, args, context, info) => {
