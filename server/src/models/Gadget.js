@@ -8,6 +8,6 @@ const GadgetSchema = new Schema({
   price: Number,
 });
 
-const Gadget = model('gadgets', GadgetSchema);
+const Gadget = model('Gadget', GadgetSchema);
 
 module.exports = { GadgetSchema, Gadget };

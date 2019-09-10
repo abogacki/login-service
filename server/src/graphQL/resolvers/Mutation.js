@@ -46,10 +46,6 @@ const login = async (root, args, context, info) => {
 };
 
 const gadgetCreate = async (root, args, context, info) => {
-  const { id } = getUserId(context);
-
-  const user = await User.findById(id);
-
   const gadget = new Gadget({
     name: args.name, // explcitly
     by_company: args.by_company, // explcitly
@@ -58,22 +54,41 @@ const gadgetCreate = async (root, args, context, info) => {
   });
 
   await gadget.save();
-  return gadget;
+
+  const { id } = getUserId(context);
+  const user = await User.findById(id);
+
   const newGadgetUserPair = new UserGadget({
     gadget,
     user,
   });
 
   await newGadgetUserPair.save();
-
-  await user.update({ gadgets: [...user.gadgets, gadget] });
-  await gadget.update({ gadgets: [...gadget.users, user] });
-
   return newGadgetUserPair;
+};
+
+const gadgetBuy = async (root, args, context) => {
+  const { id } = getUserId(context);
+  const { gadgetId } = args;
+  const user = await User.findById(id);
+  const gadget = await Gadget.findById(gadgetId);
+
+  const newPair = new UserGadget({
+    user,
+    gadget,
+  });
+
+  await newPair.save();
+
+  return UserGadget.find({ user })
+    .populate('gadget')
+    .populate('user')
+    .exec();
 };
 
 module.exports = {
   signUp,
   login,
   gadgetCreate,
+  gadgetBuy,
 };

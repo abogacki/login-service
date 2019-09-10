@@ -23,7 +23,7 @@ UserSchema.methods.validatePassword = function(candidatePassowrd) {
   });
 };
 
-const User = model('users', UserSchema);
+const User = model('User', UserSchema);
 
 module.exports = {
   User,

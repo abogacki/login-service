@@ -44,6 +44,7 @@ type Mutation {
     by_company: String!
     price: Number!
   ): Gadget
+  gadgetBuy(gadgetId: String): [UserGadget]
 }
 
 type Subscription {

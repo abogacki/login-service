@@ -15,7 +15,16 @@ app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(mount('/graphql', graphqlHTTP({ schema, graphiql: true })));
+// graphql router setup
+const Router = require('koa-router');
+const router = new Router();
+const jwt = require('./middlewares/jwt');
+router.all('/graphql', jwt, graphqlHTTP({ schema, graphiql: true }));
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+// app.use(mount('/graphql', graphqlHTTP({ schema, graphiql: true })));
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, async () => {
