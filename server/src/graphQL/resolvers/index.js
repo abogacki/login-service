@@ -6,10 +6,10 @@ const Gadget = require('./Gadget');
 const UserGadget = require('./UserGadget');
 
 module.exports = {
-  Mutation,
-  Query,
-  Subscription,
-  User,
-  Gadget,
-  UserGadget,
+	Mutation,
+	Query,
+	Subscription,
+	User,
+	Gadget,
+	UserGadget,
 };
