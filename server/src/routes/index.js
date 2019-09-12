@@ -32,16 +32,7 @@ const loginPost = async (ctx, next) => {
 };
 
 const loginGet = async (ctx, next) => {
-  ctx.type = 'html';
-  ctx.body = `
-  <form action="/login" method="post">
-  <label for="email">email</label>
-  <input name="email" id="email" type="email" value="a@a.com" required />
-    <label for="password">password</label>
-    <input name="password" id="password" value="admin" type="password" required />
-  <input type="submit" />
-</form>
-`;
+  await ctx.render('login');
 };
 
 const logout = async (ctx, next) => {
