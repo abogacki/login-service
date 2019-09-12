@@ -1,14 +1,14 @@
 const AuthService = require('../services/AuthService');
 
 const signUpPost = async (ctx, next) => {
-	const credentials = await AuthService.signUp(ctx.request.body);
-	await ctx.login(credentials.user);
-	ctx.redirect('/');
+  const credentials = await AuthService.signUp(ctx.request.body);
+  await ctx.login(credentials.user);
+  ctx.redirect('/');
 };
 
 const signUpGet = async (ctx, next) => {
-	ctx.type = 'html';
-	ctx.body = `
+  ctx.type = 'html';
+  ctx.body = `
   <form action="/signup" method="post">
     <label for="name">name</label>
     <input name="name" id="name" type="text" value="xD" required />
@@ -22,18 +22,18 @@ const signUpGet = async (ctx, next) => {
 };
 
 const loginPost = async (ctx, next) => {
-	const credentials = await AuthService.login(ctx.request.body);
-	await ctx.login(credentials.user);
-	ctx.body = {
-		isAuth: ctx.isAuthenticated(),
-		user: ctx.state.user,
-	};
-	next();
+  const credentials = await AuthService.login(ctx.request.body);
+  await ctx.login(credentials.user);
+  ctx.body = {
+    isAuth: ctx.isAuthenticated(),
+    user: ctx.state.user,
+  };
+  next();
 };
 
 const loginGet = async (ctx, next) => {
-	ctx.type = 'html';
-	ctx.body = `
+  ctx.type = 'html';
+  ctx.body = `
   <form action="/login" method="post">
   <label for="email">email</label>
   <input name="email" id="email" type="email" value="a@a.com" required />
@@ -45,18 +45,19 @@ const loginGet = async (ctx, next) => {
 };
 
 const logout = async (ctx, next) => {
-	await ctx.logout();
-	ctx.redirect('/');
+  await ctx.logout();
+  ctx.redirect('/');
 };
+
 const index = async ctx => {
-	// ctx.body = JSON.stringify(ctx.state.user);
-	console.log(ctx.state.user.name);
+  await ctx.render('index');
 };
+
 module.exports = {
-	signUpPost,
-	signUpGet,
-	index,
-	loginGet,
-	loginPost,
-	logout,
+  signUpPost,
+  signUpGet,
+  index,
+  loginGet,
+  loginPost,
+  logout,
 };

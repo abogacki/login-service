@@ -12,6 +12,8 @@ services:
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
       - API_KEY=$API_KEY
+      - FB_APP_ID=$FB_APP_ID
+      - FB_APP_SECRET=$FB_APP_SECRET
     ports:
       - 5000:5000
     volumes:

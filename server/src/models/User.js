@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const { GadgetSchema } = require('./Gadget');
 const bcrypt = require('bcryptjs');
 
 const ProfileSchema = new Schema({
@@ -14,6 +13,10 @@ const UserSchema = new Schema({
     unique: true,
   },
   password: String,
+  facebookId: {
+    type: String,
+    unique: true,
+  },
 });
 
 UserSchema.methods.validatePassword = function(candidatePassowrd) {
