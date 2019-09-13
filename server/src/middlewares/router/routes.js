@@ -1,4 +1,4 @@
-const AuthService = require('../services/AuthService');
+const AuthService = require('../../services/AuthService');
 
 const signUpPost = async (ctx, next) => {
   const credentials = await AuthService.signUp(ctx.request.body);
@@ -41,8 +41,13 @@ const logout = async (ctx, next) => {
 };
 
 const index = async ctx => {
+  console.log(ctx.state.user);
+  console.log(ctx.isAuthenticated());
+
   await ctx.render('index');
 };
+
+const auth = require('./authRoutes');
 
 module.exports = {
   signUpPost,
@@ -51,4 +56,5 @@ module.exports = {
   loginGet,
   loginPost,
   logout,
+  auth,
 };

@@ -1,6 +1,8 @@
 const LocalStrategy = require('passport-local').Strategy;
 
 const localStrategy = new LocalStrategy(async (email, password, done) => {
+  console.log(email, password);
+
   const dbUser = await User.findOne({ email });
 
   if (!dbUser) return done(null, false);

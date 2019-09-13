@@ -20,7 +20,7 @@
           <div class="card card-signin my-5">
             <div class="card-body">
               <h5 class="card-title text-center">Log In</h5>
-              <form class="form-signin" action="/login" method="POST">
+              <form class="form-signin" action="/auth/local" method="GET">
                 <div class="form-label-group">
                   <input
                     type="email"
@@ -45,7 +45,7 @@
                   />
                   <label for="inputPassword">Password</label>
                 </div>
-
+                submit
                 <div class="custom-control custom-checkbox mb-3">
                   <input
                     type="checkbox"
@@ -69,12 +69,12 @@
                 >
                   <i class="fab fa-google mr-2"></i> Log in with Google
                 </button>
-                <button
+                <a
                   class="btn btn-lg btn-facebook btn-block text-uppercase"
-                  type="submit"
+                  href="/auth/facebook"
                 >
                   <i class="fab fa-facebook-f mr-2"></i> Log in with Facebook
-                </button>
+                </a>
               </form>
             </div>
           </div>

@@ -5,10 +5,12 @@ passport.serializeUser((user, done) => {
   done(null, user._id);
 });
 
-passport.deserializeUser((userId, done) => {
-  const dbUser = User.findById(userId);
+passport.deserializeUser(async (userId, done) => {
+  const dbUser = await User.findById(userId);
   done(null, dbUser);
 });
 
 const localStrategy = require('./strategies/localAuthStrategy');
-passport.use(localStrategy);
+const facebookStrategy = require('./strategies/facebookAuthStrategy');
+passport.use('local', localStrategy);
+passport.use('facebook', facebookStrategy);

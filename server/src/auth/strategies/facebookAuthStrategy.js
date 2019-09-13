@@ -1,4 +1,5 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
+const { User } = require('../../models/User');
 
 const facebookStrategy = new FacebookStrategy(
   {
@@ -6,10 +7,15 @@ const facebookStrategy = new FacebookStrategy(
     clientSecret: process.env.FB_APP_SECRET,
     callbackURL: 'http://localhost:5000/auth/facebook/callback',
   },
-  (accessToken, refreshToken, profile, cb) => {
-    User.findByIdAndUpdate({ facebookId: profile.id }, (err, user) => {
-      return cb(err, user);
-    });
+  async (accessToken, refreshToken, profile, cb) => {
+    try {
+      const user = await User.findOneOrCreate({
+        facebookId: profile.id,
+      });
+      return cb(null, user);
+    } catch (error) {
+      cb(error);
+    }
   }
 );
 
