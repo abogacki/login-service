@@ -7,7 +7,7 @@ const privateResourceMiddleware = require('../privateResourceMiddleware');
 router.get('/', privateResourceMiddleware, routes.index);
 router.all('/graphql', graphql);
 router.use('/auth', routes.auth.routes(), routes.auth.allowedMethods());
-router.use('/login', routes.login.routes(), router.login.allowedMethods());
-router.use('/signup', router.signUp.routes(), routes.signUp.allowedMethods());
+router.use('/login', routes.login.routes(), routes.login.allowedMethods());
+router.use('/signup', routes.signUp.routes(), routes.signUp.allowedMethods());
 
 module.exports = router;
