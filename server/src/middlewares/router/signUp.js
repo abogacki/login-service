@@ -1,3 +1,4 @@
+const Router = require('koa-router');
 const AuthService = require('../../services/AuthService');
 
 const signUpPost = async (ctx, next) => {
@@ -21,40 +22,9 @@ const signUpGet = async (ctx, next) => {
 `;
 };
 
-const loginPost = async (ctx, next) => {
-  const credentials = await AuthService.login(ctx.request.body);
-  await ctx.login(credentials.user);
-  ctx.body = {
-    isAuth: ctx.isAuthenticated(),
-    user: ctx.state.user,
-  };
-  next();
-};
+const router = new Router();
 
-const loginGet = async (ctx, next) => {
-  await ctx.render('login');
-};
+router.get('/', signUpGet);
+router.post('/', signUpPost);
 
-const logout = async (ctx, next) => {
-  await ctx.logout();
-  ctx.redirect('/');
-};
-
-const index = async ctx => {
-  console.log(ctx.state.user);
-  console.log(ctx.isAuthenticated());
-
-  await ctx.render('index');
-};
-
-const auth = require('./authRoutes');
-
-module.exports = {
-  signUpPost,
-  signUpGet,
-  index,
-  loginGet,
-  loginPost,
-  logout,
-  auth,
-};
+module.exports = router;
